@@ -5,7 +5,10 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/../SDL2-2.28.5/x86_64-w64-mingw32/include/SDL2",
-                "${workspaceFolder}/../SDL2-2.28.5/x86_64-w64-mingw32/include"
+                "${workspaceFolder}/../SDL2-2.28.5/x86_64-w64-mingw32/include",
+                "${workspaceFolder}/",
+                "${workspaceFolder}",
+                "${workspaceFolder}/include"
             ],
             "defines": [
                 "_DEBUG",

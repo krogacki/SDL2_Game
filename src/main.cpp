@@ -1,40 +1,26 @@
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <testprint.h>
+#include "Game.h"
+#include "testprint.h"
 
-const int WIDTH = 800, HEIGTH = 600;
+Game *game;
 
 int main(int argc, char *argv[])
 {
     (void)argc;
     (void)argv;
 
-    SDL_Init(SDL_INIT_EVERYTHING);
-    SDL_Window *window = SDL_CreateWindow("Hello SDL666 World!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGTH, SDL_WINDOW_ALLOW_HIGHDPI);
+    game = new Game();
+    game->init("Simple game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, false);
+
+    while (game->running()) {
+        game->handleEvents();
+        game->update();
+        game->render();
+    }
+
+    game->clean();    
     
-    KrisLib::print("Witaj! Nieznajomy");
-
-    if (NULL == window)
-    {
-        std::cout << "Sum Ting Wong : " << SDL_GetError() << std::endl;
-        return 1;
-    }
-
-    SDL_Event windowEvent;
-
-    while(true)
-    {
-        if(SDL_PollEvent(&windowEvent))
-        {
-            if(SDL_QUIT == windowEvent.type)
-            {
-                break;
-            }
-        }
-    }
-
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    delete game;
 
     return EXIT_SUCCESS;
 }
