@@ -1,24 +1,25 @@
-#ifndef GAME_H_
-#define GAME_H_
+#pragma once
 
 #include "SDL2/SDL.h"
+#include <iostream>
 
-class Game {
-    public:
-        Game();
-        ~Game();
+class Game
+{
+public:
+	Game();
+	~Game();
 
-        void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
-        void handleEvents();
-        void update();
-        void render();
-        void clean();
-        bool running();
+	void init(const char* title, int width, int height, bool fullscreen);
 
-    private:
-        bool isRunning;
-        SDL_Window *window;
-        SDL_Renderer *renderer;
+	void handleEvents();
+	void update();
+	bool running() { return isRunning; }
+	void render();
+	void clean();
+
+private:
+	bool isRunning = false;
+	int cnt = 0;
+	SDL_Window *window;
+	SDL_Renderer *renderer;
 };
-
-#endif // GAME_H_
