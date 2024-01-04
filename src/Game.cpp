@@ -1,5 +1,8 @@
 #include "Game.h"
+#include "SDL_image.h"
 
+SDL_Texture* playerTex;
+SDL_Rect srcR, destR;
 Game::Game()
 {}
 
@@ -26,6 +29,10 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 		isRunning = true;
 	}
+
+	SDL_Surface* tmpSurface = IMG_Load("./assets/img/kunio.png");
+	playerTex = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	SDL_FreeSurface(tmpSurface);
 }
 
 void Game::handleEvents()
@@ -47,12 +54,17 @@ void Game::handleEvents()
 void Game::update()
 {
 	cnt++;
-	//std::cout << cnt << std::endl;
+	destR.h = 34*2;
+	destR.w = 18*2;
+	destR.x = cnt / 10;
+
+	std::cout << cnt << std::endl;
 }
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
+	SDL_RenderCopy(renderer, playerTex, NULL, &destR);
 	SDL_RenderPresent(renderer);
 }
 

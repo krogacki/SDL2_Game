@@ -1,8 +1,8 @@
 C_FLAGS := -std=c++14 -g -Wall -Wextra
 CC := g++
 RM := rm
-LINKFLAGS := -L ../SDL2-2.28.5/x86_64-w64-mingw32/lib -lmingw32 -lSDL2main -lSDL2
-#-L ../SDL2_image-2.8.2/x86_64-w64-mingw32/lib -lSDL2_image
+LINKFLAGS := -L ../SDL2-2.28.5/x86_64-w64-mingw32/lib -lmingw32 -lSDL2main -lSDL2 \
+			 -L ../SDL2_image-2.8.2/x86_64-w64-mingw32/lib -lSDL2_image
 
 .PHONY: $(TARGET)
 .PHONY: clean
@@ -12,7 +12,7 @@ VPATH:= ./src/ ./bin/obj/ ./bin/obj/debug ./include
 SRC_PATH := ./src/
 OBJ_PATH := ./bin/obj/
 INC_PATH := -I ./include  \
-			-I ../SDL2-2.28.5/x86_64-w64-mingw32/include \
+			-I ../SDL2-2.28.5/x86_64-w64-mingw32/include/SDL2 \
 			-I ../SDL2_image-2.8.2/x86_64-w64-mingw32/include/SDL2
 
 #executable Name
