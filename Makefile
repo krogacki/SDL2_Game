@@ -18,7 +18,7 @@ INC_PATH := -I ./include  \
 #executable Name
 TARGET := ./bin/debug/main
 
-OBJ1 := main.o testprint.o Game.o
+OBJ1 := main.o testprint.o Game.o TextureManager.o
 
 OBJ := $(patsubst %,$(OBJ_PATH)%,$(OBJ1))
 
