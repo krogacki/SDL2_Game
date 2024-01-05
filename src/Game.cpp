@@ -1,77 +1,76 @@
 #include "Game.h"
-#include <iostream>
+#include "SDL_image.h"
 
-Game::Game() {}
+SDL_Texture* playerTex;
+SDL_Rect srcR, destR;
+Game::Game()
+{}
 
-Game::~Game() {}
+Game::~Game()
+{}
 
-void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
+void Game::init(const char* title, int width, int height, bool fullscreen)
 {
-    int flags = 0;
+	int flags = 0;
+	
+	if (fullscreen)
+	{
+		flags = SDL_WINDOW_FULLSCREEN;
+	}
 
-    if (true == fullscreen)
-    {
-        flags = SDL_WINDOW_FULLSCREEN;
-    }
+	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
+	{
+		window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
+		renderer = SDL_CreateRenderer(window, -1, 0);
+		if (renderer)
+		{
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		}
 
-    if (0 == SDL_Init(SDL_INIT_EVERYTHING))
-    {
-        std::cout << "Subsystem Initialized!" << std::endl;
+		isRunning = true;
+	}
 
-        window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
-        if (NULL != window) {
-            std::cout << "Window created!" << std::endl;
-        }
-
-        renderer = SDL_CreateRenderer(window, -1, 0);
-        if(renderer)
-        {
-            SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-            std::cout << "Renderer created!" << std::endl;
-        }
-        
-        isRunning = true;
-    } else {
-        isRunning = false;
-    }
+	SDL_Surface* tmpSurface = IMG_Load("./assets/img/kunio.png");
+	playerTex = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	SDL_FreeSurface(tmpSurface);
 }
 
 void Game::handleEvents()
 {
-    SDL_Event event;
-    SDL_PollEvent(&event);
+	SDL_Event event;
 
-    switch (event.type) {
-    case SDL_QUIT:
-        isRunning = false;
-        break;
-    
-    default:
-        break;
-    }
+	SDL_PollEvent(&event);
+
+	switch (event.type)
+	{
+	case SDL_QUIT :
+		isRunning = false;
+		break;
+	default:
+		break;
+	}
 }
 
 void Game::update()
 {
-    
+	cnt++;
+	destR.h = 34*2;
+	destR.w = 18*2;
+	destR.x = cnt / 10;
+
+	std::cout << cnt << std::endl;
 }
 
 void Game::render()
 {
-    SDL_RenderClear(renderer);
-    //put stuff to render
-    SDL_RenderPresent(renderer);
+	SDL_RenderClear(renderer);
+	SDL_RenderCopy(renderer, playerTex, NULL, &destR);
+	SDL_RenderPresent(renderer);
 }
 
 void Game::clean()
 {
-    SDL_DestroyWindow(window);
-    SDL_DestroyRenderer(renderer);
-    SDL_Quit();
-    std::cout << "Game Cleaned" << std::endl;
-}
-
-bool Game::running()
-{
-    return isRunning;
+	SDL_DestroyWindow(window);
+	SDL_DestroyRenderer(renderer);
+	SDL_Quit();
 }
