@@ -5,6 +5,7 @@
 
 GameObject *player;
 GameObject *enemy;
+SDL_Renderer *Game::renderer = nullptr;
 
 Game::Game()
 {}
@@ -33,8 +34,8 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 		isRunning = true;
 	}
 
-	player = new GameObject("./assets/sprites/ninja_frog/jump.png", renderer, 0, 0);
-	enemy = new GameObject("./assets/sprites/mask_dude/Jump.png", renderer, 50, 50);
+	player = new GameObject("./assets/sprites/ninja_frog/jump.png", 0, 0);
+	enemy = new GameObject("./assets/sprites/mask_dude/Jump.png", 50, 50);
 }
 
 void Game::handleEvents()
