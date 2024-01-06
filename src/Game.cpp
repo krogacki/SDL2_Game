@@ -2,10 +2,12 @@
 #include "SDL_image.h"
 #include "TextureManager.h"
 #include "GameObject.h"
+#include "Map.h"
 
 GameObject *player;
 GameObject *enemy;
 SDL_Renderer *Game::renderer = nullptr;
+Map *map;
 
 Game::Game()
 {}
@@ -36,6 +38,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 	player = new GameObject("./assets/sprites/ninja_frog/jump.png", 0, 0);
 	enemy = new GameObject("./assets/sprites/mask_dude/Jump.png", 50, 50);
+	map = new Map();
 }
 
 void Game::handleEvents()
@@ -63,6 +66,7 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(renderer);
+	map->DrawMap();
 	player->Render();
 	enemy->Render();
 	SDL_RenderPresent(renderer);
